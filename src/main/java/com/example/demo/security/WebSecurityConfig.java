@@ -36,12 +36,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic().disable()
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .anyRequest().permitAll().and().addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+        http.csrf().disable().cors();
+        http.headers().frameOptions().disable();
+        http.authorizeRequests().antMatchers("/api/**").permitAll().anyRequest().authenticated().and().formLogin()
+                .loginProcessingUrl("/api/login").defaultSuccessUrl("/").permitAll().and()
+                .logout().logoutUrl("/api/logout").permitAll();
     }
 
     @Bean

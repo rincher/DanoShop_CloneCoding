@@ -6,6 +6,8 @@ import com.example.demo.service.RegisterService;
 import com.example.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +23,12 @@ public class UserController {
     @PostMapping("/api/user")
     public Optional<User> findOne(@RequestBody Long id) {
         return userService.findOne(id);
+    }
+
+    @GetMapping("/api/getUser")
+    @ResponseBody
+    public UserDetails user(@AuthenticationPrincipal UserDetails userDetails){
+        return userDetails;
     }
 
     @PutMapping("/api/users/{id}")
