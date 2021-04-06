@@ -12,4 +12,9 @@ public class ProductRequestDto {
     private String image_url;
     private String product_name;
     private String price;
+    private boolean isTrending;
+    private boolean isNew;
+    private boolean isDano;
+    private boolean isBestDeal;
+    private boolean isFree;
 }

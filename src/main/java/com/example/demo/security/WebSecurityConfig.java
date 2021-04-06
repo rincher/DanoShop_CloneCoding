@@ -38,9 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().cors();
         http.headers().frameOptions().disable();
-        http.authorizeRequests().antMatchers("/api/**").permitAll().anyRequest().authenticated().and().formLogin()
-                .loginProcessingUrl("/api/login").defaultSuccessUrl("/").permitAll().and()
-                .logout().logoutUrl("/api/logout").permitAll();
+        http.authorizeRequests().anyRequest().permitAll().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().formLogin().disable();
     }
 
     @Bean
