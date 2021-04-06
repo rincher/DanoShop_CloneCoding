@@ -10,6 +10,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Optional;
+
 @Service
 public class RegisterService {
     private final BCryptPasswordEncoder passwordEncoder;
@@ -22,9 +24,9 @@ public class RegisterService {
     }
     public void registerUser(RegisterRequestDto requestDto){
         String username = requestDto.getUsername();
-//        Optional<User> found = userRepository.findByUsername(username);
-//        if (found.isPresent()) {throw new IllegalArgumentException("중복된 사용자 ID 가 존재합니다.");
-//        }
+        Optional<User> found = userRepository.findByUsername(username);
+        if (found.isPresent()) {throw new IllegalArgumentException("중복된 사용자 ID 가 존재합니다.");
+        }
         String password = passwordEncoder.encode(requestDto.getPassword());
         String rawPass = requestDto.getPassword();
         String email = requestDto.getEmail();

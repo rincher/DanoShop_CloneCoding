@@ -20,12 +20,11 @@ public class UserService {
     }
 
     @Transactional
-    public Long update(Long id, RegisterRequestDto requestDto){
-        User user = userRepository.findById(id).orElseThrow(
+    public void update(RegisterRequestDto requestDto){
+        User user = userRepository.findByUsername(requestDto.getUsername()).orElseThrow(
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
         );
         user.update(requestDto);
-        return id;
     }
 
     public Optional<User> findOne(Long id){
@@ -36,8 +35,9 @@ public class UserService {
         return userRepository.findAllByOrderByModifiedAtDesc();
     }
 
-    public void deleteUser(Long id){
-        userRepository.deleteById(id);
+    @Transactional
+    public void deleteUser(RegisterRequestDto requestDto){
+        userRepository.deleteByUsername(requestDto.getUsername());
     }
 
 }

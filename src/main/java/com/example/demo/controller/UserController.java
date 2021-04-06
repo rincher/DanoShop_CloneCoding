@@ -29,10 +29,14 @@ public class UserController {
         return userService.findOne(id);
     }
 
-    @PutMapping("/api/users/{id}")
-    public Long updateUser(@PathVariable Long id, @RequestBody RegisterRequestDto requestDto){
-        userService.update(id, requestDto);
-        return id;
+    @PutMapping("/api/userEdit")
+    public void updateUser(@RequestBody RegisterRequestDto requestDto) {
+        userService.update(requestDto);
+    }
+
+    @DeleteMapping("/api/unregister")
+    public void deleteUser(@RequestBody RegisterRequestDto requestDto){
+        userService.deleteUser(requestDto);
     }
 
     @Secured("ROLE_ADMIN")
@@ -42,9 +46,9 @@ public class UserController {
     }
 
     @Secured("ROLE_ADMIN")
-    @DeleteMapping("/admin/users/{id}")
-    public void deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+    @DeleteMapping("/admin/users")
+    public void deleteUserAdmin(@RequestBody RegisterRequestDto requestDto) {
+        userService.deleteUser(requestDto);
     }
 
     //render
@@ -53,10 +57,8 @@ public class UserController {
         return "forbidden";
     }
 
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/login", method = RequestMethod.POST)
     public ResponseEntity<?> createToken(@RequestBody AuthenticationRequestDto requestDto) throws Exception {
-        System.out.println(requestDto.getPassword());
-        System.out.println(requestDto.getUsername());
         AuthenticationResponse token = tokenService.createToken(requestDto);
         return ResponseEntity.ok(token);
     }
