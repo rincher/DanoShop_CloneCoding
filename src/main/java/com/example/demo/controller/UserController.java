@@ -1,13 +1,16 @@
 package com.example.demo.controller;
 
+import com.example.demo.Dto.AuthenticationRequestDto;
 import com.example.demo.Dto.RegisterRequestDto;
+import com.example.demo.domain.AuthenticationResponse;
 import com.example.demo.domain.User;
+import com.example.demo.filter.JwtRequestFilter;
 import com.example.demo.service.RegisterService;
+import com.example.demo.service.TokenService;
 import com.example.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,28 +21,23 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
-    private final RegisterService registerService;
+    private final TokenService tokenService;
+    private final JwtRequestFilter jwtRequestFilter;
 
     @PostMapping("/api/user")
-    public Optional<User> findOne(@RequestBody Long id) {
+    public Optional<User> findOne(@RequestBody Long id){
         return userService.findOne(id);
     }
 
-    @GetMapping("/api/getUser")
-    @ResponseBody
-    public UserDetails user(@AuthenticationPrincipal UserDetails userDetails){
-        return userDetails;
-    }
-
     @PutMapping("/api/users/{id}")
-    public Long updateUser(@PathVariable Long id, @RequestBody RegisterRequestDto requestDto) {
+    public Long updateUser(@PathVariable Long id, @RequestBody RegisterRequestDto requestDto){
         userService.update(id, requestDto);
         return id;
     }
 
     @Secured("ROLE_ADMIN")
     @GetMapping("/admin/users")
-    public List<User> getUsersforAdmin() {
+    public List<User> getUsersforAdmin(){
         return userService.getUsers();
     }
 
@@ -55,8 +53,16 @@ public class UserController {
         return "forbidden";
     }
 
-    @PostMapping("/api/signup")
-    public void registerUser(@RequestBody RegisterRequestDto requestDto) {
-        registerService.registerUser(requestDto);
+    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+    public ResponseEntity<?> createToken(@RequestBody AuthenticationRequestDto requestDto) throws Exception {
+        System.out.println(requestDto.getPassword());
+        System.out.println(requestDto.getUsername());
+        AuthenticationResponse token = tokenService.createToken(requestDto);
+        return ResponseEntity.ok(token);
+    }
+
+    @PostMapping ("/api/getUser")
+    public User user (@RequestBody String token) throws Exception {
+        return jwtRequestFilter.doFilter(token);
     }
 }

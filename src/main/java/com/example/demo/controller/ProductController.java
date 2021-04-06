@@ -18,7 +18,4 @@ public class ProductController {
     public List<Product> getProduct(){
         return productRepository.findAll();
     }
-
-    @GetMapping("/api/trending")
-    public List<Product> getTrending(){ return productRepository.findAllByTrendingTrue();}
 }

@@ -14,27 +14,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class RegisterService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private final AuthenticationManager authenticationManager;
     private static final String ADMIN_TOKEN = "jason272k";
-
     @Autowired
-    public RegisterService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, AuthenticationManager authenticationManager){
+    public RegisterService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
     }
-
-    public User registerUser(RegisterRequestDto requestDto){
+    public void registerUser(RegisterRequestDto requestDto){
         String username = requestDto.getUsername();
+//        Optional<User> found = userRepository.findByUsername(username);
+//        if (found.isPresent()) {throw new IllegalArgumentException("중복된 사용자 ID 가 존재합니다.");
+//        }
         String password = passwordEncoder.encode(requestDto.getPassword());
+        String rawPass = requestDto.getPassword();
         String email = requestDto.getEmail();
         String phone = requestDto.getPhone();
         String name = requestDto.getName();
-        System.out.println(username);
-        System.out.println(password);
-        System.out.println(email);
-        System.out.println(phone);
-        System.out.println(name);
         UserRole role = UserRole.USER;
         if (requestDto.isAdmin()) {
             if (!requestDto.getAdminToken().equals(ADMIN_TOKEN)) {
@@ -42,8 +37,10 @@ public class RegisterService {
             }
             role = UserRole.ADMIN;
         }
-        User user = new User(username, password, name, email, phone, role);
+        User user = new User(username, password, rawPass, name, email, phone, role);
         userRepository.save(user);
-        return user;
+    }
+    public String encoding (String info){
+        return passwordEncoder.encode(info);
     }
 }
