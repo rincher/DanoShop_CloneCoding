@@ -27,8 +27,8 @@ public class UserService {
         user.update(requestDto);
     }
 
-    public Optional<User> findOne(Long id){
-        return userRepository.findById(id);
+    public Optional<User> findOne(String username){
+        return userRepository.findByUsername(username);
     }
 
     public List<User> getUsers(){
@@ -36,8 +36,8 @@ public class UserService {
     }
 
     @Transactional
-    public void deleteUser(RegisterRequestDto requestDto){
-        userRepository.deleteByUsername(requestDto.getUsername());
+    public void deleteUser(String username){
+        userRepository.deleteByUsername(username);
     }
 
 }

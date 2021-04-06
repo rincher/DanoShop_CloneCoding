@@ -5,10 +5,12 @@ import com.example.demo.Dto.RegisterRequestDto;
 import com.example.demo.domain.AuthenticationResponse;
 import com.example.demo.domain.User;
 import com.example.demo.filter.JwtRequestFilter;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.RegisterService;
 import com.example.demo.service.TokenService;
 import com.example.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +27,8 @@ public class UserController {
     private final JwtRequestFilter jwtRequestFilter;
 
     @PostMapping("/api/user")
-    public Optional<User> findOne(@RequestBody Long id){
-        return userService.findOne(id);
+    public Optional<User> findOne(@RequestBody String username){
+        return userService.findOne(username);
     }
 
     @PutMapping("/api/userEdit")
@@ -34,9 +36,9 @@ public class UserController {
         userService.update(requestDto);
     }
 
-    @DeleteMapping("/api/unregister")
-    public void deleteUser(@RequestBody RegisterRequestDto requestDto){
-        userService.deleteUser(requestDto);
+    @DeleteMapping("/api/unregister/{username}")
+    public void deleteUser(@PathVariable String username){
+        userService.deleteUser(username);
     }
 
     @Secured("ROLE_ADMIN")
@@ -46,9 +48,9 @@ public class UserController {
     }
 
     @Secured("ROLE_ADMIN")
-    @DeleteMapping("/admin/users")
-    public void deleteUserAdmin(@RequestBody RegisterRequestDto requestDto) {
-        userService.deleteUser(requestDto);
+    @DeleteMapping("/admin/users/{username}")
+    public void deleteUserAdmin(@PathVariable String username) {
+        userService.deleteUser(username);
     }
 
     //render
@@ -58,9 +60,14 @@ public class UserController {
     }
 
     @RequestMapping(value = "/api/login", method = RequestMethod.POST)
-    public ResponseEntity<?> createToken(@RequestBody AuthenticationRequestDto requestDto) throws Exception {
+    public ResponseEntity<Message> createToken(@RequestBody AuthenticationRequestDto requestDto) throws Exception {
         AuthenticationResponse token = tokenService.createToken(requestDto);
-        return ResponseEntity.ok(token);
+        Optional<User> getUser = userService.findOne(requestDto.getUsername());
+        Message message = Message.builder()
+                .message1(token)
+                .message2(getUser)
+                .build();
+        return new ResponseEntity<Message>(message, HttpStatus.OK);
     }
 
     @PostMapping ("/api/getUser")
