@@ -1,13 +1,12 @@
 package com.example.demo.controller;
 
 import com.example.demo.Dto.CartRequestDto;
-import com.example.demo.Dto.ProductRequestDto;
 import com.example.demo.domain.Cart;
 import com.example.demo.service.CartService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -20,5 +19,10 @@ public class CartController {
 
         Cart cart = cartService.createCart(cartRequestDto, username);
         return cart;
+    }
+
+    @GetMapping("/api/cart/{username}")
+    public Optional<Cart> getCart(@PathVariable String username){
+        return cartService.getCartByUsername(username);
     }
 }

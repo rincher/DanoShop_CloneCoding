@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface CartRepository extends JpaRepository<Cart, String> {
 
-    Optional<Cart> findAllByUsername(String Username);
+    Optional<Cart> findTopByUsernameOrderByCreatedAtDesc(String Username);
 }

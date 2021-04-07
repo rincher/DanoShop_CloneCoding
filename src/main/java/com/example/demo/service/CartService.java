@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -20,4 +22,6 @@ public class CartService {
         cartRepository.save(cart);
         return cart;
     }
+
+    public Optional<Cart> getCartByUsername(String username){return cartRepository.findTopByUsernameOrderByCreatedAtDesc(username);}
 }
