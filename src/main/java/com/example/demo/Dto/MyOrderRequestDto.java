@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class CartRequestDto {
+public class MyOrderRequestDto {
     private Long id;
     private String img_url;
     private String product_name;
@@ -15,3 +15,4 @@ public class CartRequestDto {
     private String username;
     private Integer amount;
 }
+

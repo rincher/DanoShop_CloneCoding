@@ -2,7 +2,9 @@ package com.example.demo.service;
 
 import com.example.demo.Dto.CartRequestDto;
 import com.example.demo.domain.Cart;
+import com.example.demo.domain.MyOrder;
 import com.example.demo.repository.CartRepository;
+import com.example.demo.repository.MyOrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,10 @@ import java.util.Optional;
 public class CartService {
     private final CartRepository cartRepository;
 
+    @Transactional
+    public void deleteItem(String username, Long id){
+        cartRepository.deleteByIdAndUsername(id,username);}
+
 
     @Transactional
     public Cart createCart(CartRequestDto cartRequestDto, String username){
@@ -23,5 +29,5 @@ public class CartService {
         return cart;
     }
 
-    public Optional<Cart> getCartByUsername(String username){return cartRepository.findTopByUsernameOrderByCreatedAtDesc(username);}
+    public List<Cart> getCartByUsername(String username){return cartRepository.findAllByUsernameOrderByCreatedAtDesc(username);}
 }
