@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Entity
@@ -39,7 +40,7 @@ public class Product {
     @Column(nullable = false)
     private boolean isFree;
 
-    public Product(ProductRequestDto requestDto){
+    public Product(ProductRequestDto requestDto, Long userId){
         this.id = requestDto.getId();
         this.image_url = requestDto.getImage_url();
         this.product_name = requestDto.getProduct_name();
@@ -49,6 +50,5 @@ public class Product {
         this.isDano = requestDto.isDano();
         this.isBestDeal = requestDto.isBestDeal();
         this.isFree = requestDto.isFree();
-
     }
 }
