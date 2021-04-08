@@ -1,65 +1,162 @@
-# Project Title / 프로젝트 이름
+# 다노샵 클론코딩
 
-**[뱃지나 프로젝트에 관한 이미지들이 이 위치에 들어가면 좋습니다]**  
-One Paragraph of project description goes here / 프로젝트의 전반적인 내용에 대한 요약을 여기에 적습니다
+**[프로젝트의 목적]**  
+기간:일주일, 현재 서비스 중인 사이트중 다노샵을 선택하여 최대한 근접하게 클론코딩을 진행
 
-## Getting Started / 어떻게 시작하나요?
+## 준비과정
 
-이 곳에서 설치에 관련된 이야기를 해주시면 좋습니다.
+다노샵에서 동작되고 있는 기능들을 찾아보고, Frontend와 Backed간 연결구조를 초기에 구상한다.
 
 ### Prerequisites / 선행 조건
 
-아래 사항들이 설치가 되어있어야합니다.
+DB:
 
 ```
-예시
+Mysql(Amazon RDS)
 ```
 
-### Installing / 설치
-
-아래 사항들로 현 프로젝트에 관한 모듈들을 설치할 수 있습니다.
+Crwaling:
 
 ```
-예시
+Python Selenium
 ```
 
-## Running the tests / 테스트의 실행
-
-어떻게 테스트가 이 시스템에서 돌아가는지에 대한 설명을 합니다
-
-### 테스트는 이런 식으로 동작합니다
-
-왜 이렇게 동작하는지, 설명합니다
+Server:
 
 ```
-예시
+Amazon EC2 Ubuntu
 ```
 
-### 테스트는 이런 식으로 작성하시면 됩니다
-
+개발 환경:
 ```
-예시
+Spring
+```
+
+### DB Schema
+
+Cart
+```
+id
+created_at
+modified_at
+amount
+img_url
+price
+product_name
+username
+```
+
+My_Order
+```
+id
+created_at
+modified_at
+amount
+img_url
+price
+product_name
+username
+```
+
+product
+```
+id
+image_url
+product_name
+price
+is_trending
+is_dano
+is_best_deal
+is_free
+is_new
+```
+
+User
+```
+id
+created_at
+modified_at
+email
+name
+phone
+role
+username
+raw_pasword
+```
+
+
+## Server API URL
+
+회원가입 api
+```
+/user/signup	POST
+```
+
+로그인 api
+```
+/api/login	POST
+```
+
+로그인된 사용자 정보 api
+```
+/api/getUser	POST
+```
+
+회원정보 수정 api
+```
+/api/userEdit	PUT
+```
+
+회원탈퇴 api
+```
+/api/unregister/{username}	Delete
+```
+
+바로 주문하기 api
+```
+/api/DirectOrder/{username}	POST
+```
+
+전체 상품 목록 api
+```
+/api/product	GET
+```
+
+장바구니에 상품담기 api
+```
+/api/cart	POST
+```
+
+장바구니 상품빼기 api
+```
+/api/cart/{username}/removeItem/{id}	Delete
+```
+
+주문하기
+```
+/api/MyOrder/{username}	POST
+```
+
+내 주문내역 api
+```
+/api/MyOrder/{username}	GET
 ```
 
 ## Deployment / 배포
 
-Add additional notes about how to deploy this on a live system / 라이브 시스템을 배포하는 방법
+배포과정
+```
+gradel build -> .jar -> deploy
+```
 
 ## Built With / 누구랑 만들었나요?
+Fronend
+* [노유진](https://github.com/noh-yj)
+* [여지영](https://github.com/Jennayeo)
 
-* [이름](링크) - 무엇 무엇을 했어요
-* [Name](Link) - Create README.md
+Backend
+* [최재성](https://github.com/unkwn22)
+* [윤현동](https://github.com/rincher)
 
-## Contributiong / 기여
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us. / [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) 를 읽고 이에 맞추어 pull request 를 해주세요.
-
-## License / 라이센스
-
-This project is licensed under the MIT License - see the [LICENSE.md](https://gist.github.com/PurpleBooth/LICENSE.md) file for details / 이 프로젝트는 MIT 라이센스로 라이센스가 부여되어 있습니다. 자세한 내용은 LICENSE.md 파일을 참고하세요.
-
-## Acknowledgments / 감사의 말
-
-* Hat tip to anyone whose code was used / 코드를 사용한 모든 사용자들에게 팁
-* Inspiration / 영감
-* etc / 기타
+##Frontend page
+[dano-clone](https://github.com/noh-yj/dano-clone)
