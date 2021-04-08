@@ -158,5 +158,5 @@ Backend
 * [최재성](https://github.com/unkwn22)
 * [윤현동](https://github.com/rincher)
 
-##Frontend page
+## Frontend page
 [dano-clone](https://github.com/noh-yj/dano-clone)
