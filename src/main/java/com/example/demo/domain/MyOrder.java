@@ -1,16 +1,10 @@
 package com.example.demo.domain;
 
-import com.example.demo.Dto.CartRequestDto;
 import com.example.demo.Dto.MyOrderRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.SQLInsert;
-
 import javax.persistence.*;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter

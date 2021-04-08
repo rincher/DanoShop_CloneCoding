@@ -2,15 +2,12 @@ package com.example.demo.service;
 
 import com.example.demo.Dto.CartRequestDto;
 import com.example.demo.domain.Cart;
-import com.example.demo.domain.MyOrder;
 import com.example.demo.repository.CartRepository;
-import com.example.demo.repository.MyOrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service

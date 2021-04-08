@@ -14,6 +14,7 @@ import java.util.List;
 public class ProductController {
     private final ProductRepository productRepository;
 
+    //모든 상품 조회
     @GetMapping("/api/product")
     public List<Product> getProduct(){
         return productRepository.findAll();

@@ -10,7 +10,7 @@ import org.springframework.security.core.Authentication;
 
 import java.util.List;
 import java.util.Optional;
-
+//여기는 메세지를 만들기 위해서 만들어진 class
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Message {

@@ -2,14 +2,14 @@ package com.example.demo.security;
 
 import com.example.demo.domain.User;
 import com.example.demo.domain.UserRole;
-import lombok.extern.log4j.Log4j2;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-@Log4j2
+
 public class UserDetailsImpl implements UserDetails {
     private final User user;
     public UserDetailsImpl(User user) {

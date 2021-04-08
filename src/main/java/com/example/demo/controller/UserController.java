@@ -5,8 +5,6 @@ import com.example.demo.Dto.RegisterRequestDto;
 import com.example.demo.domain.AuthenticationResponse;
 import com.example.demo.domain.User;
 import com.example.demo.filter.JwtRequestFilter;
-import com.example.demo.repository.UserRepository;
-import com.example.demo.service.RegisterService;
 import com.example.demo.service.TokenService;
 import com.example.demo.service.UserService;
 import lombok.RequiredArgsConstructor;

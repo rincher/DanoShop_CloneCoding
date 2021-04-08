@@ -5,12 +5,8 @@ import com.example.demo.domain.Cart;
 import com.example.demo.domain.MyOrder;
 import com.example.demo.repository.CartRepository;
 import com.example.demo.repository.MyOrderRepository;
-import com.sun.el.util.ReflectionUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ReflectionUtils;
-
-import java.lang.reflect.*;
 import javax.transaction.Transactional;
 import java.util.List;
 
