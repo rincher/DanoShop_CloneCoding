@@ -15,6 +15,9 @@ import java.util.List;
 public class MyOrderService {
     private final MyOrderRepository myOrderRepository;
     private final CartRepository cartRepository;
+
+    // Cart에서 주문내역으로 넘겨주는 서비스.
+    //CART에 저장되어 있는 것들을 가져와서 MyOrder에 저장하기 위해서 MyOrder에 @Setter를 해주어야 한다.
     @Transactional
     public MyOrder createMyOrder(String username){
         List<Cart> allData = cartRepository.findAllByUsername(username);
@@ -31,7 +34,7 @@ public class MyOrderService {
         }
         return null;
     }
-
+    //바로 주문하기 서비스
     @Transactional
     public MyOrder createDirectOrder(MyOrderRequestDto myOrderRequestDto, String username){
         MyOrder myOrder = new MyOrder(myOrderRequestDto, username);

@@ -29,7 +29,9 @@ public class TokenService {
         this.userDetailsService = userDetailsService;
         this.registerService = registerService;
     }
-
+    //토큰 생성하는 서비스 부분
+    //로그인창에서 입력받은 사용자이름과 비밀번호를 User DB에서 찾아서 확인하고 만약에 맞지 않으면 BadCredentialException을 반환하고
+    //일치하면 jwtTokenUtill을 통해서 토큰을 만들고, 그리고 AuthenticationResponse를 통해 토큰 전달.
     public AuthenticationResponse createToken(AuthenticationRequestDto requestDto) throws Exception {
         String username = requestDto.getUsername();
         String password = requestDto.getPassword();

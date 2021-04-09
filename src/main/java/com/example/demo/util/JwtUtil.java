@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+//JWT TOKEN 생성하는 부분
 @Service
 public class JwtUtil {
 
