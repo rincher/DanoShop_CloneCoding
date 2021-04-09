@@ -29,16 +29,41 @@ public class UserController {
         return userService.findOne(username);
     }
 
+    //사용자 정보 수정
     @PutMapping("/api/userEdit")
     public void updateUser(@RequestBody RegisterRequestDto requestDto) {
         userService.update(requestDto);
     }
 
+    //사용자 삭제
     @DeleteMapping("/api/unregister/{username}")
     public void deleteUser(@PathVariable String username){
         userService.deleteUser(username);
     }
 
+    //Login을 통해서 사용자 정보와 JWT Token을 발급
+    @RequestMapping(value = "/api/login", method = RequestMethod.POST)
+    public ResponseEntity<Message> createToken(@RequestBody AuthenticationRequestDto requestDto) throws Exception {
+        // 토큰 생성하는 서비스
+        AuthenticationResponse token = tokenService.createToken(requestDto);
+        //입력받은 사용자를 찾는 부분
+        Optional<User> getUser = userService.findOne(requestDto.getUsername());
+        //메세지를 만들어서 여러 responsebody를 내려줄 수 있도록 한다.
+        Message message = Message.builder()
+                .message1(token)
+                .message2(getUser)
+                .build();
+        //200ok 일 경우에만 responsebody에 넣어주는 부분
+        return new ResponseEntity<Message>(message, HttpStatus.OK);
+    }
+
+    //로그인된 사용자 정보를 돌려주는 부분
+    @PostMapping ("/api/getUser")
+    public User user (@RequestBody String token) throws Exception {
+        return jwtRequestFilter.doFilter(token);
+    }
+
+    // Admin 전용
     @Secured("ROLE_ADMIN")
     @GetMapping("/admin/users")
     public List<User> getUsersforAdmin(){
@@ -51,25 +76,4 @@ public class UserController {
         userService.deleteUser(username);
     }
 
-    //render
-    @GetMapping("/user/forbidden")
-    public String forbidden() {
-        return "forbidden";
-    }
-
-    @RequestMapping(value = "/api/login", method = RequestMethod.POST)
-    public ResponseEntity<Message> createToken(@RequestBody AuthenticationRequestDto requestDto) throws Exception {
-        AuthenticationResponse token = tokenService.createToken(requestDto);
-        Optional<User> getUser = userService.findOne(requestDto.getUsername());
-        Message message = Message.builder()
-                .message1(token)
-                .message2(getUser)
-                .build();
-        return new ResponseEntity<Message>(message, HttpStatus.OK);
-    }
-
-    @PostMapping ("/api/getUser")
-    public User user (@RequestBody String token) throws Exception {
-        return jwtRequestFilter.doFilter(token);
-    }
 }
